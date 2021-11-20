@@ -44,6 +44,6 @@ class DataFetcher {
       return d;
   }
 
-var x;
+
 }
 
