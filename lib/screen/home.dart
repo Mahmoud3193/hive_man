@@ -16,8 +16,6 @@ class MyHomeApp extends StatefulWidget {
 
 class _MyHomeAppState extends State<MyHomeApp> {
 
-  DataFetcher f = DataFetcher();
-
 
 
   @override
@@ -26,8 +24,10 @@ class _MyHomeAppState extends State<MyHomeApp> {
     super.dispose();
   }
 
-  _fetchData() async {
-    await f.getData();
+  void _fetchData() async {
+    print("initState is called");
+    await DataFetcher.putDataToDB();
+
   }
 
 
@@ -40,7 +40,9 @@ class _MyHomeAppState extends State<MyHomeApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('pics app'),),
+      appBar: AppBar(title: GestureDetector(child: Text('pics app'), onTap: (){setState(() {
+
+      });} ,),),
         body: ValueListenableBuilder<Box<Data>>(
           valueListenable: DataFetcher.getDataBox().listenable(),
           builder: (context, box, _) {

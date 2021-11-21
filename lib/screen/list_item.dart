@@ -1,7 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_man/service/fetch_api.dart';
 import 'image_full_view.dart';
 import '../model/data.dart';
 

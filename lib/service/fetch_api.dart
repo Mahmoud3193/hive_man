@@ -16,26 +16,24 @@ class DataFetcher {
 
 
 
-  Future<List<dynamic>> _fetchDataFromApi() async {
-      const String apiUrl = 'https://jsonplaceholder.typicode.com/photos';
+  static Future<List<dynamic>> _fetchDataFromApi() async {
+      const String apiUrl = 'https://jsonplaceholder.typicode.com/albums/1/photos';
       final Response response = await http.get(Uri.parse(apiUrl));
       final List<dynamic> data = json.decode(response.body);
       return data;
   }
 
-  Future<void> _putDataToDB() async{
-    _fetchDataFromApi().then((value) =>
-    {for(var element in value) getDataBox().add(Data.fromJson(element))});
+  static Future<void> putDataToDB() async{
 
+    //getDataBox().clear();
+
+    _fetchDataFromApi().then((var value) {
+      if(value.isNotEmpty) getDataBox().clear();
+      print("cleared");
+      for (var element in value) {getDataBox().add(Data.fromJson(element));}
+      print("putted");
+    });
   }
-
-
-
-  getData() async{
-    getDataBox().clear();
-    await _putDataToDB();
-  }
-
 
 }
 
