@@ -2,6 +2,7 @@
 
 import 'package:hive/hive.dart';
 
+part 'data.g.dart';
 
 @HiveType(typeId: 1)
 class Data extends HiveObject{
@@ -21,7 +22,7 @@ class Data extends HiveObject{
   Data(this.albumId, this.id, this.title, this.url, this.thumbnailUrl);
 
   factory Data.fromJson(dynamic json) {
-    return Data(json["albumId"], json["id"], json["title"], json["url"], json["thumbnailUrl"]);
+    return Data(json['albumId'], json['id'], json['title'], json['url'], json['thumbnailUrl']);
   }
 
 }

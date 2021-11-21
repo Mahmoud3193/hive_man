@@ -25,7 +25,7 @@ class _ListItemState extends State<ListItem> {
           child: Image.network(widget.data.thumbnailUrl,height: 150,width: 150,)
       ),
       title: Text(widget.data.title),
-      subtitle: Text("The Photo ID is ${widget.data.albumId} & The Photo ID is ${widget.data.id}"),
+      subtitle: Text('The Photo ID is ${widget.data.albumId} & The Photo ID is ${widget.data.id}'),
     );
   }
 }

@@ -1,6 +1,9 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_man/model/data.dart';
 import 'package:hive_man/service/fetch_api.dart';
 import 'list_item.dart';
 
@@ -14,12 +17,17 @@ class MyHomeApp extends StatefulWidget {
 class _MyHomeAppState extends State<MyHomeApp> {
 
   DataFetcher f = DataFetcher();
-  List _data = [];
+
+
+
+  @override
+  void dispose() {
+    Hive.box('Data').close();
+    super.dispose();
+  }
 
   _fetchData() async {
-    _data = await f.getData();
-    setState(() {});
-
+    await f.getData();
   }
 
   @override
@@ -27,10 +35,15 @@ class _MyHomeAppState extends State<MyHomeApp> {
     _fetchData();
     return Scaffold(
 
-      appBar: AppBar(title: Text("pics app"),),
-        body: ListView.builder(
-          itemCount: _data.length,
-          itemBuilder: (context, index) => ListItem(_data[index]),
+      appBar: AppBar(title: const Text('pics app'),),
+        body: ValueListenableBuilder<Box<Data>>(
+          valueListenable: DataFetcher.getDataBox().listenable(),
+          builder: (context, box, _) {
+            return ListView.builder(
+              itemCount: box.values.length,
+              itemBuilder: (context, index) => ListItem( box.values.toList()[index]),
+            );
+          },
         )
     );
   }
