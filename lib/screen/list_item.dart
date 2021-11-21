@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_man/service/fetch_api.dart';
 import 'image_full_view.dart';
 import '../model/data.dart';
 
@@ -19,6 +20,9 @@ class _ListItemState extends State<ListItem> {
   Widget build(BuildContext context) {
     return ListTile(
       leading: GestureDetector(
+          onLongPress: () {
+            widget.data.delete();
+          },
           onTap: () {
             Navigator.of(context).push(CupertinoPageRoute(builder: (context) => ImageFullView(widget.data.url)));
           },

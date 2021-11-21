@@ -9,9 +9,9 @@ import 'package:http/http.dart';
 
 class DataFetcher {
 
-  static const String hiveBoxName = 'pics';
+  static const String hiveBoxName = 'Data';
 
-  static Box<Data> getDataBox() => Hive.box<Data>('Data');
+  static Box<Data> getDataBox() => Hive.box<Data>(hiveBoxName);
 
 
 
@@ -32,6 +32,7 @@ class DataFetcher {
 
 
   getData() async{
+    getDataBox().clear();
     await _putDataToDB();
   }
 

@@ -22,7 +22,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
 
   @override
   void dispose() {
-    Hive.box('Data').close();
+    Hive.box(DataFetcher.hiveBoxName).close();
     super.dispose();
   }
 
@@ -30,18 +30,24 @@ class _MyHomeAppState extends State<MyHomeApp> {
     await f.getData();
   }
 
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
-    _fetchData();
     return Scaffold(
-
       appBar: AppBar(title: const Text('pics app'),),
         body: ValueListenableBuilder<Box<Data>>(
           valueListenable: DataFetcher.getDataBox().listenable(),
           builder: (context, box, _) {
+            print("${box.values.length} items");
             return ListView.builder(
               itemCount: box.values.length,
-              itemBuilder: (context, index) => ListItem( box.values.toList()[index]),
+              itemBuilder: (context, index) => ListItem(box.values.toList().cast<Data>()[index]),
             );
           },
         )
