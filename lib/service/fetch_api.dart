@@ -12,27 +12,28 @@ class DataFetcher {
   static const String hiveBoxName = 'Data';
 
   static Box<Data> getDataBox() => Hive.box<Data>(hiveBoxName);
+  static List<dynamic> _apiData = [];
 
 
 
-
-  static Future<List<dynamic>> _fetchDataFromApi() async {
+  static Future<void> _fetchDataFromApi() async {
       const String apiUrl = 'https://jsonplaceholder.typicode.com/albums/1/photos';
       final Response response = await http.get(Uri.parse(apiUrl));
       final List<dynamic> data = json.decode(response.body);
-      return data;
+      _apiData = data;
   }
 
   static Future<void> putDataToDB() async{
-
-    //getDataBox().clear();
-
-    _fetchDataFromApi().then((var value) {
-      if(value.isNotEmpty) getDataBox().clear();
+    await _fetchDataFromApi();
+    if(_apiData.isNotEmpty){
+      await getDataBox().clear();
       print("cleared");
-      for (var element in value) {getDataBox().add(Data.fromJson(element));}
-      print("putted");
-    });
+      for (var element in _apiData) {
+        getDataBox().add(Data.fromJson(element));
+      }
+      print("added");
+      _apiData.clear();
+    }
   }
 
 }
